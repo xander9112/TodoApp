@@ -178,6 +178,19 @@ class AuthController extends Controller
         return $this->register($request);
     }
 
+    public function validateEmail(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|max:255|unique:users',
+        ]);;
+
+        if ($validator->fails()) {
+            if ($request->ajax()) {
+                return response()->json(['message' => $validator->getMessageBag()]);
+            }
+        }
+    }
+
     public function register(Request $request)
     {
         $validator = $this->validator($request->all());

@@ -12,21 +12,26 @@ class NavBar extends Component {
 	}
 
 	render () {
+		const { user } = this.props;
+
 		const iconElementRight =
 			<IconMenu
 				targetOrigin={{horizontal: 'right', vertical: 'top'}}
 				anchorOrigin={{horizontal: 'right', vertical: 'top'}}
 				iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}>
 				<MenuItem primaryText="Войти" linkButton={true} containerElement={<Link to="/auth/login" />}/>
-				<MenuItem primaryText="Регистрация" linkButton={true}
-				          containerElement={<Link to="/auth/registration" />}/> 
-				<MenuItem primaryText="Sign out"/>
+				<MenuItem primaryText="Регистрация"
+				          linkButton={true}
+				          containerElement={<Link to="/auth/registration" />}/>
+				<MenuItem primaryText="Выйти"
+				          linkButton={true}
+				          containerElement={<Link to="/auth/logout" />}/>
 			</IconMenu>;
 
 		return (
 			<div>
 				<AppBar
-					title="Title"
+					title={user.name}
 					iconElementRight={iconElementRight}>
 				</AppBar>
 			</div>

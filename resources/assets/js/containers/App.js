@@ -15,7 +15,7 @@ class App extends Component {
 	}
 
 	render () {
-		const { app } = this.props;
+		const { app, user } = this.props;
 		// const { handleLogin, handleLogout } = this.props.userActions;
 		const style = {
 			'left':   'inherit',
@@ -34,15 +34,15 @@ class App extends Component {
 
 		return (
 			<div className="row">
-				<NavBar />
+				<NavBar {...user} />
 				<div className="col s12">
 					{this.props.children}
-
 					<Snackbar
 						open={app.message.length != 0}
-						message="fasfa"
+						message={app.message}
 						style={style}
-						autoHideDuration={4000}
+						autoHideDuration={15000}
+						bodyStyle={app.error ? error : success}
 						// onRequestClose={this.handleRequestClose}
 					/>
 				</div>

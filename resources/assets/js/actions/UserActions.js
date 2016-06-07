@@ -1,19 +1,19 @@
 import {
 	LOGIN_REQUEST,
 	LOGIN_SUCCESS,
-	LOGIN_FAIL,
+	LOGIN_FAILED,
 	REGISTARTION_REQUEST,
 	REGISTARTION_SUCCESS,
-	REGISTARTION_FAIL
+	REGISTARTION_FAILED
 } from '../constants/User'
 import {createAction, handleAction, handleActions} from 'redux-actions';
 import {UserModel} from '../models/UserModel';
 import {showMessage} from './AppActions';
 
 const loginSuccess = createAction(LOGIN_SUCCESS);
-const loginFailed = createAction(REGISTARTION_FAIL);
+const loginFailed = createAction(LOGIN_FAILED);
 const registrationSuccess = createAction(REGISTARTION_SUCCESS);
-const registrationFailed = createAction(LOGIN_FAIL);
+const registrationFailed = createAction(REGISTARTION_FAILED);
 
 export function getAuth () {
 	"use strict";
@@ -87,7 +87,8 @@ export function postRegistration (data) {
 					dispatch(registrationSuccess(data.user));
 					dispatch(showMessage(data.message));
 				} else {
-					dispatch(registrationFailed(data.errors))
+					dispatch(registrationFailed(data.errors));
+					dispatch(showMessage(new Error(data.message)));
 				}
 			}
 		});

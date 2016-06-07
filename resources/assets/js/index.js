@@ -15,6 +15,7 @@ const store = configureStore();
 
 import App from './containers/App'
 import Login from './containers/Auth/Login'
+import Logout from './containers/Auth/Logout'
 import Registration from './containers/Auth/Registration'
 
 $.ajaxSetup({
@@ -34,6 +35,7 @@ if (!!RootElement) {
 						<Route path="auth">
 							<Route path="login" component={Login}/>
 							<Route path="registration" component={Registration}/>
+							<Route path="logout" component={Logout}/>
 						</Route>
 					</Route>
 				</Router>

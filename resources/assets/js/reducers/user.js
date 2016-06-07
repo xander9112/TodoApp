@@ -1,10 +1,9 @@
 import {
 	LOGIN_SUCCESS,
-	LOGIN_FAIL,
+	LOGIN_FAILED,
 	LOGOUT_SUCCESS,
-	REGISTARTION_REQUEST,
 	REGISTARTION_SUCCESS,
-	REGISTARTION_FAIL
+	REGISTARTION_FAILED
 } from '../constants/User'
 
 const initialState = {
@@ -18,13 +17,12 @@ export default function user (state = initialState, action) {
 			return { ...state, user: action.payload, error: '' };
 		case LOGOUT_SUCCESS:
 			return { ...state, user: action.payload, error: '' };
-		case LOGIN_FAIL:
+		case LOGIN_FAILED:
 			return { ...state, error: action.payload.message };
 		case REGISTARTION_SUCCESS:
 			return { ...state, user: action.payload, error: '' };
-		case REGISTARTION_FAIL:
-			return { ...state, errors: action.payload.errors };
-
+		case REGISTARTION_FAILED:
+			return { ...state, errors: action.payload };
 		default:
 			return state
 	}

@@ -26,6 +26,7 @@ Route::group(['prefix' => 'auth'], function () {
     // Маршруты регистрации...
     Route::get('registration', 'Auth\AuthController@getRegister');
     Route::post('registration', 'Auth\AuthController@postRegister');
+    Route::post('registration/validateEmail', 'Auth\AuthController@validateEmail');
 });
 
 Route::group(['prefix' => 'tasks'], function () {

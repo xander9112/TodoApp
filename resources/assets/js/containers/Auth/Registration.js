@@ -3,8 +3,10 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
+import CircularProgress from 'material-ui/CircularProgress';
 import * as userActions from '../../actions/UserActions'
 import _ from 'lodash';
+import $ from 'jquery';
 import {reduxForm} from 'redux-form';
 
 export const fields = [ 'name', 'email', 'password', 'password_confirmation' ];
@@ -35,42 +37,33 @@ const validate = values => {
 	return errors
 };
 
+const asyncValidate = (values/*, dispatch */) => {
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			url:     '/auth/registration/validateEmail',
+			method:  'POST',
+			data:    {
+				email: values.email
+			},
+			success: (response) => {
+				"use strict";
+
+				if (!_.isUndefined(response.message)) {
+					reject({ email: response.message.email[ 0 ] });
+				} else {
+					resolve();
+				}
+			},
+			error:   () => {
+			}
+		});
+	});
+};
+
+
 class Registration extends Component {
 	constructor (props) {
 		super(props);
-
-		this.state = {
-			form: [
-				{
-					field:       'name',
-					description: 'Имя',
-					isRequired:  true,
-					type:        'text',
-					value:       ''
-				},
-				{
-					field:       'email',
-					description: 'Email адрес',
-					isRequired:  true,
-					type:        'email',
-					value:       ''
-				},
-				{
-					field:       'password',
-					description: 'Пароль',
-					isRequired:  true,
-					type:        'password',
-					value:       ''
-				},
-				{
-					field:       'password_confirmation',
-					description: 'Подтверждение пароля',
-					isRequired:  true,
-					type:        'password',
-					value:       ''
-				}
-			]
-		};
 	}
 
 	onSubmit (event) {
@@ -80,8 +73,12 @@ class Registration extends Component {
 	}
 
 	render () {
-		const { fields: { name, email, password, password_confirmation }, handleSubmit } = this.props;
+		const { asyncValidating, fields: { name, email, password, password_confirmation } } = this.props;
 		let { valid } = this.props;
+
+		const style = {
+			position: 'absolute'
+		};
 
 		return (
 			<div>
@@ -95,7 +92,9 @@ class Registration extends Component {
 						hintText='Email'
 						errorText={(email.touched && email.error) ? email.error: ''}
 						{...email}
-					/><br/>
+					/>
+					{asyncValidating === 'email' && <CircularProgress size={0.5} style={style}/>}
+					<br/>
 					<TextField
 						hintText='Пароль'
 						errorText={(password.touched && password.error) ? password.error: ''}
@@ -115,8 +114,10 @@ class Registration extends Component {
 
 function mapStateToProps (state) {
 	"use strict";
-	console.log(state);
-	return {}
+
+	return {
+		user: state.user
+	}
 }
 
 function mapDispatchToProps (dispatch) {
@@ -128,9 +129,18 @@ function mapDispatchToProps (dispatch) {
 
 
 Registration = reduxForm({
-	form: 'RegistrationForm',
-	      fields,
-	      validate
+	form:            'RegistrationForm',
+	                 fields,
+	                 validate,
+	                 asyncValidate,
+	asyncBlurFields: [ 'email' ]
+	/*initialValues:   {
+	 // 'name', 'email', 'password', 'password_confirmation'
+	 name:                  'AlexZander',
+	 // email:                 'xander91@mail.ru',
+	 password:              '3277530',
+	 password_confirmation: '3277530',
+	 }*/
 })(Registration);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Registration);

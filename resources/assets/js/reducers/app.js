@@ -20,7 +20,12 @@ export default function user (state = initialState, action) {
 		case REQUEST_FAILED:
 			return { ...state, showLoader: false, error: action.payload.message };
 		case SHOW_MESSAGE:
-			return { ...state, message: action.payload };
+			return {
+				...state,
+				message: action.payload.message ? action.payload.message : action.payload,
+				error:   action.error
+			};
+
 
 		default:
 			return state
