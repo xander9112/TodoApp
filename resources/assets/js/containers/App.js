@@ -28,12 +28,13 @@ class App extends Component {
 		const success = {
 			backgroundColor: green500
 		};
-		
+
 		return (
 			<div className="row">
 				<NavBar {...user} />
 				<div className="col s12">
 					{this.props.children}
+
 					<Snackbar
 						open={app.message.length != 0}
 						message={app.message}
@@ -45,8 +46,6 @@ class App extends Component {
 				</div>
 			</div>
 		);
-		// bodyStyle={}
-		/*user.error.length ? error: success*/
 	}
 }
 
