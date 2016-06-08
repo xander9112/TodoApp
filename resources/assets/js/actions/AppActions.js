@@ -4,7 +4,7 @@ import {
 	REQUEST_FAILED,
 	SHOW_MESSAGE
 } from '../constants/App'
-import {createAction, handleAction, handleActions} from 'redux-actions';
+import {createAction} from 'redux-actions';
 
 export const requestStart = createAction(REQUEST_START);
 export const requestSuccess = createAction(REQUEST_SUCCESS);

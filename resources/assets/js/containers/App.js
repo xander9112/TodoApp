@@ -5,8 +5,6 @@ import Snackbar from 'material-ui/Snackbar';
 import NavBar from './NavBar';
 
 import * as userActions from '../actions/UserActions'
-// import * as AppActions from '../actions/AppActions'
-
 import {red500, green500} from 'material-ui/styles/colors';
 
 class App extends Component {
@@ -30,8 +28,7 @@ class App extends Component {
 		const success = {
 			backgroundColor: green500
 		};
-
-
+		
 		return (
 			<div className="row">
 				<NavBar {...user} />

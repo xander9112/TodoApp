@@ -6,6 +6,8 @@
   "dependencies": {
     "babel-polyfill": "^6.9.0",
     "babel-runtime": "6.9.2",
+    "formsy-material-ui": "0.4.3",
+    "formsy-react": "0.18.0",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-csso": "2.0.0",
     "gulp-inject": "4.1.0",

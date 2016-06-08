@@ -154,7 +154,7 @@ class AuthController extends Controller
             if ($request->ajax()) {
                 return response()->json(['data' => array(
                     'success' => true,
-                    'message' => 'Authorize success',
+                    'message' => 'Вы успешно вошли!',
                     'user' => Auth::user()
                 )]);
             } else {

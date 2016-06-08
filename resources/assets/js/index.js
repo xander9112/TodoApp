@@ -6,7 +6,7 @@ import {Provider} from 'react-redux'
 import configureStore from './store/configureStore'
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {Router, Route, browserHistory} from 'react-router'
+import {Router, Route, IndexRoute, browserHistory} from 'react-router'
 import $ from 'jquery';
 
 injectTapEventPlugin();
@@ -14,6 +14,8 @@ injectTapEventPlugin();
 const store = configureStore();
 
 import App from './containers/App'
+import Index from './containers/Index'
+import {Index as TasksIndex} from './containers/Tasks/Index'
 import Login from './containers/Auth/Login'
 import Logout from './containers/Auth/Logout'
 import Registration from './containers/Auth/Registration'
@@ -32,10 +34,14 @@ if (!!RootElement) {
 			<MuiThemeProvider muiTheme={getMuiTheme()}>
 				<Router history={browserHistory}>
 					<Route path="/" component={App}>
+						<IndexRoute component={Index}/>
 						<Route path="auth">
 							<Route path="login" component={Login}/>
 							<Route path="registration" component={Registration}/>
 							<Route path="logout" component={Logout}/>
+						</Route>
+						<Route path="tasks">
+							<IndexRoute component={TasksIndex}/>
 						</Route>
 					</Route>
 				</Router>
@@ -44,3 +50,7 @@ if (!!RootElement) {
 		RootElement
 	);
 }
+
+/*
+
+ */

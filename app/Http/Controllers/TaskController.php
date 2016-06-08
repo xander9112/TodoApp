@@ -45,9 +45,9 @@ class TaskController extends Controller
                 'tasks' => $this->tasks->forUser($request->user())
             )]);
 
-        } else {
-            return view('index');
         }
+
+        return view('index');
     }
 
     public function task(Request $request, Task $task)

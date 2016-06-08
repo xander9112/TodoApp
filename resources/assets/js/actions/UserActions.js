@@ -2,15 +2,17 @@ import {
 	LOGIN_REQUEST,
 	LOGIN_SUCCESS,
 	LOGIN_FAILED,
+	LOGOUT_SUCCESS,
 	REGISTARTION_REQUEST,
 	REGISTARTION_SUCCESS,
 	REGISTARTION_FAILED
 } from '../constants/User'
-import {createAction, handleAction, handleActions} from 'redux-actions';
+import {createAction} from 'redux-actions';
 import {UserModel} from '../models/UserModel';
 import {showMessage} from './AppActions';
 
 const loginSuccess = createAction(LOGIN_SUCCESS);
+const logoutSuccess = createAction(LOGOUT_SUCCESS);
 const loginFailed = createAction(LOGIN_FAILED);
 const registrationSuccess = createAction(REGISTARTION_SUCCESS);
 const registrationFailed = createAction(REGISTARTION_FAILED);
@@ -43,9 +45,15 @@ export function handleLogin (formValue) {
 			return response.data
 		}).then((data) => {
 			if (data.success) {
-				dispatch(dispatch(loginSuccess(data.user)))
+				dispatch(loginSuccess(data.user));
+				dispatch(showMessage(data.message));
 			} else {
-				dispatch(loginFailed(new Error(data.errorMessage)))
+				if (data.message) {
+					dispatch(loginFailed(new Error(data.message)));
+					dispatch(showMessage(new Error(data.message)));
+				} else {
+					dispatch(loginFailed({ errors: data }));
+				}
 			}
 		});
 	}
@@ -63,9 +71,9 @@ export function handleLogout () {
 		}).then((data) => {
 			"use strict";
 			if (data.success) {
-				dispatch(loginSuccess({}))
+				dispatch(logoutSuccess({}))
 			} else {
-				dispatch(loginFailed(new Error(data.errorMessage)))
+				dispatch(loginFailed(new Error(data.message)))
 			}
 		});
 	}

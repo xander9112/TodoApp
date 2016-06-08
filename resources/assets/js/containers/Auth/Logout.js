@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as userActions from '../../actions/UserActions'
+import {browserHistory} from 'react-router'
 
 class Logout extends Component {
 	componentDidMount () {
@@ -10,13 +11,17 @@ class Logout extends Component {
 		userActions.handleLogout();
 	}
 
-	render () {
-		const { user } = this.props;
-		console.log(user);
-		console.log(this.props);
+	componentWillReceiveProps (props) {
+		let { user } = props.user;
 
+		if (!user.id) {
+			browserHistory.push('/auth/login');
+		}
+	}
+
+	render () {
 		return (
-			<div>Logout</div>
+			<div></div>
 		);
 	}
 }

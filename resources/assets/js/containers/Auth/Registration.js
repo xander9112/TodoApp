@@ -1,22 +1,27 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import TextField from 'material-ui/TextField';
-import FlatButton from 'material-ui/FlatButton';
-import CircularProgress from 'material-ui/CircularProgress';
+import {Paper, TextField, RaisedButton, CircularProgress} from 'material-ui'
 import * as userActions from '../../actions/UserActions'
 import _ from 'lodash';
 import $ from 'jquery';
-import {reduxForm} from 'redux-form';
+import {browserHistory} from 'react-router'
+
+import {
+	FormsyCheckbox, FormsyDate, FormsyRadio, FormsyRadioGroup,
+	FormsySelect, FormsyText, FormsyTime, FormsyToggle
+} from 'formsy-material-ui/lib';
 
 export const fields = [ 'name', 'email', 'password', 'password_confirmation' ];
 const validate = values => {
 	const errors = {};
+
 	if (!values.name) {
 		errors.name = 'Required'
 	} else if (values.name.length > 15) {
 		errors.name = 'Must be 15 characters or less'
 	}
+
 	if (!values.email) {
 		errors.email = 'Required'
 	} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
@@ -36,8 +41,16 @@ const validate = values => {
 
 	return errors
 };
+const style = {
+	position:  'absolute',
+	top:       '50%',
+	left:      '50%',
+	transform: 'translate(-50%, -50%)',
+	textAlign: 'center',
+	padding:   '50px'
+};
 
-const asyncValidate = (values/*, dispatch */) => {
+const asyncValidate = (values) => {
 	return new Promise((resolve, reject) => {
 		$.ajax({
 			url:     '/auth/registration/validateEmail',
@@ -60,54 +73,134 @@ const asyncValidate = (values/*, dispatch */) => {
 	});
 };
 
-
 class Registration extends Component {
 	constructor (props) {
 		super(props);
+
+		this.state = {
+			validationErrors: {},
+			canSubmit:        false
+		}
 	}
 
-	onSubmit (event) {
-		event.preventDefault();
-		let { userActions, values } = this.props;
-		userActions.postRegistration(values);
+	componentWillReceiveProps (props) {
+		let { user } = props.user;
+
+		if (user.id) {
+			browserHistory.push('/');
+		}
+	}
+
+	componentDidMount () {
+		let { user } = this.props.user;
+
+		if (user.id) {
+			browserHistory.push('/');
+		}
+	}
+
+	enableButton () {
+		this.setState({
+			canSubmit: true
+		});
+	}
+
+	disableButton () {
+		this.setState({
+			canSubmit: false
+		});
+	}
+
+	handleSubmit (model) {
+		let { userActions } = this.props;
+		userActions.postRegistration(model);
+	}
+
+	validateForm (values) {
+		let validationErrors = {};
+
+		if (!values.name) {
+			validationErrors.name = 'Required'
+		} else if (values.name.length > 15) {
+			validationErrors.name = 'Must be 15 characters or less'
+		} else if (!values.email) {
+			validationErrors.email = 'Required'
+		} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+			validationErrors.email = 'Invalid email address'
+		} else if (!values.password) {
+			validationErrors.password = 'Required'
+		} else if (values.password.length < 6) {
+			validationErrors.password = 'Пароль должен быть не меньше 6 символов'
+		} else if (!values.password_confirmation) {
+			validationErrors.password_confirmation = 'Required'
+		} else if (values.password_confirmation != values.password) {
+			validationErrors.password = 'Пароли не совпадают'
+		} else {
+			validationErrors = {};
+		}
+
+		this.setState({ validationErrors });
+	}
+
+	mapInputs (inputs) {
+		return {
+			'name':                  inputs.name,
+			'email':                 inputs.email,
+			'password':              inputs.password,
+			'password_confirmation': inputs.password_confirmation
+		};
 	}
 
 	render () {
-		const { asyncValidating, fields: { name, email, password, password_confirmation } } = this.props;
-		let { valid } = this.props;
-
-		const style = {
-			position: 'absolute'
-		};
-
+		const { canSubmit, validationErrors } = this.state;
+		//
 		return (
-			<div>
-				<form>
-					<TextField
-						hintText='Имя'
-						errorText={(name.touched && name.error) ? name.error: ''}
-						{...name}
-					/><br/>
-					<TextField
-						hintText='Email'
-						errorText={(email.touched && email.error) ? email.error: ''}
-						{...email}
-					/>
-					{asyncValidating === 'email' && <CircularProgress size={0.5} style={style}/>}
+			<Paper style={style} zDepth={5}>
+				<Formsy.Form
+					method="POST"
+					onValidSubmit={::this.handleSubmit}
+					ref="RegistrationForm"
+					mapping={::this.mapInputs}
+					onChange={::this.validateForm}
+					onValid={::this.enableButton}
+					onInvalid={::this.disableButton}
+					validationErrors={validationErrors}
+				>
+					<div>
+						<FormsyText
+							hintText="Имя"
+							name="name"
+							required
+						/>
+					</div>
+					<div>
+						<FormsyText
+							hintText="Email"
+							name="email"
+							required
+							type="email"
+						/>
+					</div>
+					<div>
+						<FormsyText
+							hintText="Пароль"
+							name="password"
+							required
+							type="password"
+						/>
+					</div>
+					<div>
+						<FormsyText
+							hintText="Подтверждение пароля"
+							name="password_confirmation"
+							required
+							type="password"
+						/>
+					</div>
 					<br/>
-					<TextField
-						hintText='Пароль'
-						errorText={(password.touched && password.error) ? password.error: ''}
-						{...password}
-					/><br/>
-					<TextField
-						hintText='Повторите пароль'
-						errorText={(password_confirmation.touched && password_confirmation.error) ? password_confirmation.error: ''}
-						{...password_confirmation}
-					/><br/>
-					<FlatButton label="Зарегистрироваться" disabled={!valid} onTouchTap={::this.onSubmit}/>
-				</form>
-			</div>
+					<RaisedButton type="submit" label="Зарегистрироваться" disabled={!canSubmit} primary={true}/>
+				</Formsy.Form>
+			</Paper>
 		);
 	}
 }
@@ -128,19 +221,21 @@ function mapDispatchToProps (dispatch) {
 }
 
 
-Registration = reduxForm({
-	form:            'RegistrationForm',
-	                 fields,
-	                 validate,
-	                 asyncValidate,
-	asyncBlurFields: [ 'email' ]
-	/*initialValues:   {
-	 // 'name', 'email', 'password', 'password_confirmation'
-	 name:                  'AlexZander',
-	 // email:                 'xander91@mail.ru',
-	 password:              '3277530',
-	 password_confirmation: '3277530',
-	 }*/
-})(Registration);
+/*
+ Registration = reduxForm({
+ form:            'RegistrationForm',
+ fields,
+ validate,
+ asyncValidate,
+ asyncBlurFields: [ 'email' ]
+ /!*initialValues:   {
+ // 'name', 'email', 'password', 'password_confirmation'
+ name:                  'AlexZander',
+ // email:                 'xander91@mail.ru',
+ password:              '3277530',
+ password_confirmation: '3277530',
+ }*!/
+ })(Registration);
+ */
 
 export default connect(mapStateToProps, mapDispatchToProps)(Registration);
