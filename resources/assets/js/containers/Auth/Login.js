@@ -19,6 +19,15 @@ const style = {
 	padding:   '50px'
 };
 
+const containerStyle = {
+	position:   'absolute',
+	top:        '0%',
+	left:       '0%',
+	width:      '100%',
+	height:     '100%',
+	background: 'rgba(0, 0, 0, 0.6)'
+};
+
 class Login extends Component {
 	constructor (props) {
 		super(props);
@@ -94,36 +103,38 @@ class Login extends Component {
 		const { canSubmit, validationErrors } = this.state;
 
 		return (
-			<Paper style={style} zDepth={5}>
-				<Formsy.Form
-					method="POST"
-					onValidSubmit={::this.handleSubmit}
-					ref="LoginForm"
-					mapping={::this.mapInputs}
-					onChange={::this.validateForm}
-					onValid={::this.enableButton}
-					onInvalid={::this.disableButton}
-					validationErrors={validationErrors}>
-					<div>
-						<FormsyText
-							name="email"
-							validations="isEmail"
-							required
-							hintText="Email"
-						/>
-					</div>
-					<div>
-						<FormsyText
-							name="password"
-							hintText="Пароль"
-							required
-							type="password"
-						/>
-					</div>
-					<br/>
-					<RaisedButton type="submit" label="Войти" disabled={!canSubmit} primary={true}/>
-				</Formsy.Form>
-			</Paper>
+			<div style={containerStyle}>
+				<Paper style={style} zDepth={5}>
+					<Formsy.Form
+						method="POST"
+						onValidSubmit={::this.handleSubmit}
+						ref="LoginForm"
+						mapping={::this.mapInputs}
+						onChange={::this.validateForm}
+						onValid={::this.enableButton}
+						onInvalid={::this.disableButton}
+						validationErrors={validationErrors}>
+						<div>
+							<FormsyText
+								name="email"
+								validations="isEmail"
+								required
+								hintText="Email"
+							/>
+						</div>
+						<div>
+							<FormsyText
+								name="password"
+								hintText="Пароль"
+								required
+								type="password"
+							/>
+						</div>
+						<br/>
+						<RaisedButton type="submit" label="Войти" disabled={!canSubmit} primary={true}/>
+					</Formsy.Form>
+				</Paper>
+			</div>
 		);
 	}
 }

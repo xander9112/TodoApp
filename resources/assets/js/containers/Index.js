@@ -5,13 +5,17 @@ import {Paper, RaisedButton} from 'material-ui';
 import {Link} from 'react-router';
 
 const style = {
+	position:  'absolute',
+	top:       '50%',
+	left:      '0%',
+	width:     '100%',
+	transform: 'translate(0, -50%)',
 	textAlign: 'center',
-	padding:   '10px 10px 1.78rem 10px',
-	margin:    '0.75rem 0'
+	padding:   '10px 10px 1.78rem 10px'
 };
 
 const deviderStyle = {
-	padding: '0 20px'
+	padding: '0px 20px'
 };
 
 class Index extends Component {

@@ -11,7 +11,7 @@ export default function configureStore (initialState) {
 	const store = createStore(
 		rootReducer,
 		initialState,
-		applyMiddleware(thunk, storeAutentication, logger));
+		applyMiddleware(thunk, storeAutentication/*, logger*/));
 
 	if (module.hot) {
 		module.hot.accept('../reducers', () => {
