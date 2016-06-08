@@ -31,36 +31,14 @@ const containerStyle = {
 	background: 'rgba(0, 0, 0, 0.6)'
 };
 
-const asyncValidate = (values) => {
-	return new Promise((resolve, reject) => {
-		$.ajax({
-			url:     '/auth/registration/validateEmail',
-			method:  'POST',
-			data:    {
-				email: values.email
-			},
-			success: (response) => {
-				"use strict";
-
-				if (!_.isUndefined(response.message)) {
-					reject({ email: response.message.email[ 0 ] });
-				} else {
-					resolve();
-				}
-			},
-			error:   () => {
-			}
-		});
-	});
-};
-
 class Registration extends Component {
 	constructor (props) {
 		super(props);
 
 		this.state = {
 			validationErrors: {},
-			canSubmit:        false
+			canSubmit:        false,
+			showLoader:       false
 		}
 	}
 
@@ -133,7 +111,27 @@ class Registration extends Component {
 	}
 
 	asyncValidate (event) {
+		this.setState({ showLoader: true });
 
+		$.ajax({
+			url:     '/auth/registration/validateEmail',
+			method:  'POST',
+			data:    {
+				email: event.target.value
+			},
+			success: (response) => {
+				"use strict";
+
+				if (!_.isUndefined(response.message)) {
+					this.refs.RegistrationForm.updateInputsWithError({ email: response.message.email[ 0 ] });
+				}
+
+				this.setState({ showLoader: false });
+			},
+			error:   () => {
+				this.setState({ showLoader: false });
+			}
+		});
 	}
 
 	render () {
@@ -167,6 +165,7 @@ class Registration extends Component {
 								type="email"
 								onBlur={::this.asyncValidate}
 							/>
+							{this.state.showLoader && <CircularProgress size={0.5} style={{position: 'absolute'}}/>}
 						</div>
 						<div>
 							<FormsyText
