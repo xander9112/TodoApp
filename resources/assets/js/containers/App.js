@@ -5,11 +5,17 @@ import Snackbar from 'material-ui/Snackbar';
 import NavBar from './NavBar';
 
 import * as userActions from '../actions/UserActions'
+import * as appActions from '../actions/AppActions'
 import {red500, green500} from 'material-ui/styles/colors';
 
 class App extends Component {
-	componentDidMount () {
-		// this.props.userActions.getAuth();
+	constructor (props) {
+		super(props);
+	}
+
+	handleRequestClose () {
+		const { appActions } = this.props;
+		appActions.clearMessage();
 	}
 
 	render () {
@@ -39,9 +45,9 @@ class App extends Component {
 						open={app.message.length != 0}
 						message={app.message}
 						style={style}
-						autoHideDuration={15000}
+						autoHideDuration={4000}
 						bodyStyle={app.error ? error : success}
-						// onRequestClose={this.handleRequestClose}
+						onRequestClose={::this.handleRequestClose}
 					/>
 				</div>
 			</div>
@@ -58,8 +64,8 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
 	return {
-		// pageActions: bindActionCreators(pageActions, dispatch),
-		userActions: bindActionCreators(userActions, dispatch)
+		userActions: bindActionCreators(userActions, dispatch),
+		appActions:  bindActionCreators(appActions, dispatch)
 	}
 }
 

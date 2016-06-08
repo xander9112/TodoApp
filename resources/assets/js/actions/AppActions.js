@@ -11,3 +11,10 @@ export const requestSuccess = createAction(REQUEST_SUCCESS);
 export const requestFailed = createAction(REQUEST_FAILED);
 export const showMessage = createAction(SHOW_MESSAGE);
 
+export function clearMessage () {
+	"use strict";
+
+	return function (dispatch) {
+		dispatch(showMessage(''));
+	}
+}
