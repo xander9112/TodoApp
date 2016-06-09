@@ -35,24 +35,27 @@ export function getAuth () {
 	}
 }
 
-export function handleLogin (formValue) {
+export function handleLogin (formValue, resolve, reject) {
 	return function (dispatch) {
 		dispatch({
 			type: LOGIN_REQUEST
 		});
 
-		UserModel.postLogin(formValue).then((response) => {
-			return response.data
+		return UserModel.postLogin(formValue).then((response) => {
+			return response.data;
 		}).then((data) => {
 			if (data.success) {
 				dispatch(loginSuccess(data.user));
 				dispatch(showMessage(data.message));
+				resolve();
 			} else {
 				if (data.message) {
 					dispatch(loginFailed(new Error(data.message)));
 					dispatch(showMessage(new Error(data.message)));
+					reject({ _error: data.message });
 				} else {
 					dispatch(loginFailed({ errors: data }));
+					reject({ ...data });
 				}
 			}
 		});

@@ -107,7 +107,7 @@ class AuthController extends Controller
             if (Auth::check()) {
                 return response()->json(['data' => array(
                     'success' => true,
-                    'message' => 'Authorize success',
+                    'message' => 'Вы успешно вошли!',
                     'user' => Auth::user()
                 )]);
             } else {
@@ -118,7 +118,6 @@ class AuthController extends Controller
                 )]);
             }
         } else {
-//            return $this->login($request);
             return view('index');
         }
     }
@@ -199,7 +198,7 @@ class AuthController extends Controller
             if ($request->ajax()) {
                 return response()->json(['data' => array(
                     'success' => false,
-                    'message' => 'Registration failed',
+                    'message' => 'Вы успешно зарегистрировались',
                     'errors' => $validator->getMessageBag()
                 )]);
             } else {

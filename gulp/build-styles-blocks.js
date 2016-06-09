@@ -11,7 +11,7 @@ module.exports = (gulp, plugins, config) => () => {
 			}
 		}))
 		.pipe(gulp.dest(config.build.stylesBlocks))
-};
+}; 
 /*
  'use strict';
 

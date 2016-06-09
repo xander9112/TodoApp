@@ -6,7 +6,11 @@ import thunk from 'redux-thunk'
 import {storeAutentication} from '../containers/storeAutentication';
 
 export default function configureStore (initialState) {
-	const logger = createLogger();
+	const logger = createLogger({
+		duration:  true,
+		logErrors: true,
+		collapsed: true
+	});
 
 	const store = createStore(
 		rootReducer,
