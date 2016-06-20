@@ -2,14 +2,20 @@ import React, {Component, PropTypes} from 'react';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 
-class Index extends Component {
+import TasksToolbar from '../../components/Tasks/TasksToolbar'
+import Task from '../../components/Tasks/Task'
+
+class TasksIndex extends Component {
 	constructor (props) {
 		super(props);
 	}
 
 	render () {
 		return (
-			<div>Index</div>
+			<div>
+				<TasksToolbar />
+				<Task />
+			</div>
 		);
 	}
 }
@@ -25,6 +31,6 @@ function mapDispatchToProps (dispatch) {
 	return {}
 }
 
-Index.propTypes = {};
+TasksIndex.propTypes = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+export default connect(mapStateToProps, mapDispatchToProps)(TasksIndex);

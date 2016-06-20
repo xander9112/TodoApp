@@ -48,11 +48,11 @@ class LoginForm extends Component {
 				<div>
 					<TextField
 						hintText="Пароль"
+						type="password"
 						errorText={password.touched && password.error && password.error}
 						{...password}
 					/>
 				</div>
-
 				{error &&
 				<div class="card-panel">
 					<span style={{color: red500}}>{error}</span>

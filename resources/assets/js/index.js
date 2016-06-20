@@ -15,7 +15,7 @@ const store = configureStore();
 
 import App from './containers/App'
 import Index from './containers/Index'
-import {Index as TasksIndex} from './containers/Tasks/Index'
+import TasksIndex from './containers/Tasks/Index'
 import Login from './containers/Auth/Login'
 import Logout from './containers/Auth/Logout'
 import Registration from './containers/Auth/Registration'
@@ -35,6 +35,7 @@ if (!!RootElement) {
 				<Router history={browserHistory}>
 					<Route path="/" component={App}>
 						<IndexRoute component={Index}/>
+						
 						<Route path="auth">
 							<Route path="login" component={Login}/>
 							<Route path="registration" component={Registration}/>
