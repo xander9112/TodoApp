@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import Snackbar from 'material-ui/Snackbar';
 import NavBar from './NavBar';
-
+const { Grid, Row, Col } = require('react-flexbox-grid');
 import * as userActions from '../actions/UserActions'
 import * as appActions from '../actions/AppActions'
 import {red500, green500} from 'material-ui/styles/colors';
@@ -36,20 +36,24 @@ class App extends Component {
 		};
 
 		return (
-			<div className="row">
+			<div>
 				<NavBar {...user} />
-				<div className="col s12">
-					{this.props.children}
+				<Grid fluid={true}>
+					<Row>
+						<Col xs={12}>
+							{this.props.children}
 
-					<Snackbar
-						open={app.message.length != 0}
-						message={app.message}
-						style={style}
-						autoHideDuration={4000}
-						bodyStyle={app.error ? error : success}
-						onRequestClose={::this.handleRequestClose}
-					/>
-				</div>
+							<Snackbar
+								open={app.message.length != 0}
+								message={app.message}
+								style={style}
+								autoHideDuration={4000}
+								bodyStyle={app.error ? error : success}
+								onRequestClose={::this.handleRequestClose}
+							/>
+						</Col>
+					</Row>
+				</Grid>
 			</div>
 		);
 	}

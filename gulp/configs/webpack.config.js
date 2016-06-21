@@ -30,13 +30,20 @@ module.exports = {
 				]
 			}
 		],
-		loaders:    [ {
-			loaders: [ 'react-hot', 'babel-loader' ],
-			test:    /\.js$/,
-			include: path.join(__dirname, '../../resources/assets/js'),
-			exclude: /node_modules/,
-			plugins: [ 'transform-runtime' ]
-		} ]
+		loaders:    [
+			{
+				loaders: [ 'react-hot', 'babel-loader' ],
+				test:    /\.js$/,
+				include: path.join(__dirname, '../../resources/assets/js'),
+				exclude: /node_modules/,
+				plugins: [ 'transform-runtime' ]
+			}, {
+				test: /\.css$/,
+				loader: 'style!css?modules',
+				include: /flexboxgrid/,
+			}
+
+		]
 	},
 
 	resolve: {

@@ -5,6 +5,7 @@ import {AppBar, IconMenu, IconButton, MenuItem, Drawer} from 'material-ui';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import {Link} from 'react-router';
 import * as userActions from '../actions/UserActions';
+const { Grid, Row, Col } = require('react-flexbox-grid');
 
 class NavBar extends Component {
 	constructor (props) {
@@ -53,23 +54,21 @@ class NavBar extends Component {
 			</IconMenu>;
 
 		return (
-			<div>
-				<AppBar
-					title={user.name}
-					iconElementRight={iconElementRight}
-					onLeftIconButtonTouchTap={::this.openDrawer}>
-					<Drawer
-						docked={false}
-						open={this.state.drawerOpened}
-						onRequestChange={::this.closeDrawer}
-					>
-						<MenuItem primaryText="Главная" onTouchTap={::this.closeDrawer} linkButton={true}
-						          containerElement={<Link to="/" />}/>
-						<MenuItem primaryText="Задачи" onTouchTap={::this.closeDrawer} linkButton={true}
-						          containerElement={<Link to="/tasks" />}/>
-					</Drawer>
-				</AppBar>
-			</div>
+			<AppBar
+				title={user.name}
+				iconElementRight={iconElementRight}
+				onLeftIconButtonTouchTap={::this.openDrawer}>
+				<Drawer
+					docked={false}
+					open={this.state.drawerOpened}
+					onRequestChange={::this.closeDrawer}
+				>
+					<MenuItem primaryText="Главная" onTouchTap={::this.closeDrawer} linkButton={true}
+					          containerElement={<Link to="/" />}/>
+					<MenuItem primaryText="Задачи" onTouchTap={::this.closeDrawer} linkButton={true}
+					          containerElement={<Link to="/tasks" />}/>
+				</Drawer>
+			</AppBar>
 		);
 	}
 }

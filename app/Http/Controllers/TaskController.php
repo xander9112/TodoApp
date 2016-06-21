@@ -44,7 +44,6 @@ class TaskController extends Controller
                 'success' => true,
                 'tasks' => $this->tasks->forUser($request->user())
             )]);
-
         }
 
         return view('index');
@@ -81,7 +80,11 @@ class TaskController extends Controller
         $message = "Задача `$task->name` успешно обновлена";
 
         if ($request->ajax()) {
-            return response()->json(['data' => array('message' => $message, 'redirecturl' => '/tasks')]);
+            return response()->json(['data' => array(
+                'success' => true,
+                'message' => $message,
+                'tasks' => $this->tasks->forUser($request->user()),
+            )]);
         } else {
             return redirect('/tasks')->with('status', $message);
         }
@@ -105,7 +108,15 @@ class TaskController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect('/tasks');
+        if ($request->ajax()) {
+            return response()->json(['data' => array(
+                'success' => true,
+                'message' => 'Задача успешно создана',
+                'tasks' => $this->tasks->forUser($request->user())
+            )]);
+        } else {
+            return redirect('/tasks');
+        }
     }
 
     /**

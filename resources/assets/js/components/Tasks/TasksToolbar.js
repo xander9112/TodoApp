@@ -1,13 +1,12 @@
 import React, {Component, PropTypes} from 'react';
 import {reduxForm} from 'redux-form'
-import IconMenu from 'material-ui/IconMenu';
-import IconButton from 'material-ui/IconButton';
-import FontIcon from 'material-ui/FontIcon';
-import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
-import MenuItem from 'material-ui/MenuItem';
-import DropDownMenu from 'material-ui/DropDownMenu';
+
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import Dialog from 'material-ui/Dialog';
+const { Row } = require('react-flexbox-grid');
+
 import RaisedButton from 'material-ui/RaisedButton';
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import TextField from 'material-ui/TextField';
 
 export const fields = [ 'name', 'description' ];
@@ -23,67 +22,93 @@ const validate = values => {
 	return errors
 };
 
+const style = {
+	position: 'fixed',
+	right:    20,
+	bottom:   20
+};
+
 class TasksToolbar extends Component {
 	constructor (props) {
 		super(props);
 
 		this.state = {
 			value: 3,
+			open:  false
 		};
 	}
+
+	handleOpen () {
+		this.setState({ open: true });
+	};
+
+	handleClose () {
+		this.setState({ open: false });
+	};
 
 	handleChange (event, index, value) {
 		this.setState({ value })
 	}
 
-	submit () {
-		console.log('fasfasfsa');
+	submit (data) {
+		const { createTask, resetForm } = this.props;
+
+		return new Promise((resolve, reject) => {
+			// console.log(createTask(data, resolve, reject));
+
+			createTask(data, resolve, reject).done(() => {
+				resetForm();
+				this.handleClose();
+			}).fail(() => {
+				console.log('fail');
+			});
+		});
 	}
 
-
 	render () {
-		const { fields: { name, description }, error, handleSubmit, submitting, valid } = this.props;
+		const { fields: { name, description }, handleSubmit, valid } = this.props;
 
 		return (
-			<div>
-				<Toolbar>
-					<ToolbarGroup firstChild={true}>
-						<DropDownMenu value={this.state.value} onChange={::this.handleChange}>
-							<MenuItem value={1} primaryText="All Broadcasts"/>
-							<MenuItem value={2} primaryText="All Voice"/>
-							<MenuItem value={3} primaryText="All Text"/>
-							<MenuItem value={4} primaryText="Complete Voice"/>
-							<MenuItem value={5} primaryText="Complete Text"/>
-							<MenuItem value={6} primaryText="Active Voice"/>
-							<MenuItem value={7} primaryText="Active Text"/>
-						</DropDownMenu>
-					</ToolbarGroup>
-					<ToolbarGroup>
-						<FontIcon className="muidocs-icon-custom-sort"/>
-						<ToolbarSeparator />
+			<Row>
+				<FloatingActionButton style={style} onTouchTap={::this.handleOpen}>
+					<ContentAdd />
+				</FloatingActionButton>
+				<Dialog
+					title="Создать задачу"
+					modal={false}
+					open={this.state.open}
+					onRequestClose={::this.handleClose}>
+
+					<form onSubmit={handleSubmit(::this.submit)}>
+						<TextField
+							hintText="Новая задача"
+							fullWidth={true}
+							errorText={name.touched && name.error && name.error}
+							{...name}
+						/>
+						<TextField
+							hintText="Описание"
+							fullWidth={true}
+							multiLine={true}
+							errorText={description.touched && description.error && description.error}
+							{...description}
+						/>
+
 						<RaisedButton
-							label="Создать задачу"
+							label="Отмена"
+							primary={true}
+							onTouchTap={::this.handleClose}
+						/>,
+						<RaisedButton
+							label="Создать"
 							primary={true}
 							disabled={!valid}
-							onTouchTap={::this.submit}/>
-					</ToolbarGroup>
-				</Toolbar>
-				<form onSubmit={handleSubmit(::this.submit)}>
-					<TextField
-						hintText="Новая задача"
-						fullWidth={true}
-						errorText={name.touched && name.error && name.error}
-						{...name}
-					/>
-					<TextField
-						hintText="Описание"
-						fullWidth={true}
-						multiLine={true}
-						errorText={description.touched && description.error && description.error}
-						{...description}
-					/>
-				</form>
-			</div>
+							type="submit"
+							keyboardFocused={true}
+						/>
+					</form>
+				</Dialog>
+			</Row>
 		);
 	}
 }
