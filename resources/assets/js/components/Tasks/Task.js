@@ -45,8 +45,7 @@ class Task extends Component {
 }
 
 Task.propTypes = {
-	name:        PropTypes.string.isRequired,
-	description: PropTypes.string
+	task: PropTypes.object
 };
 
 export default Task;

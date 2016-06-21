@@ -19,10 +19,10 @@ class App extends Component {
 	}
 
 	render () {
-		const { app } = this.props; 
+		const { app } = this.props;
 		const style = {
-			'left':   'inherit',
-			'right':  '50px',
+			'left':   '50px',
+			'right':  'inherit',
 			'bottom': '50px'
 		};
 
