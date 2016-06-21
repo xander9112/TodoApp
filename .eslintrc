@@ -22,8 +22,8 @@
     "no-empty": 1,
     "no-extra-boolean-cast": 0,
     "no-extra-semi": 1,
-    "no-mixed-spaces-and-tabs": 1,
     "no-class-assign": 1,
+    "no-mixed-spaces-and-tabs": 0,
     /*"quotes": [
       1,
       "double"

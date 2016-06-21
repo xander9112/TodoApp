@@ -2,7 +2,7 @@ import {
 	ADD_TASK_SUCCESS,
 	UPDATE_TASK_SUCCESS,
 	DELETE_TASK_SUCCESS,
-	GET_TASKS_SUCCESS,
+	GET_TASKS_SUCCESS
 } from '../constants/Task'
 
 const initialState = {

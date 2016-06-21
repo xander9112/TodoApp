@@ -5,7 +5,6 @@ import {AppBar, IconMenu, IconButton, MenuItem, Drawer} from 'material-ui';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import {Link} from 'react-router';
 import * as userActions from '../actions/UserActions';
-const { Grid, Row, Col } = require('react-flexbox-grid');
 
 class NavBar extends Component {
 	constructor (props) {
@@ -75,6 +74,7 @@ class NavBar extends Component {
 
 function mapStateToProps (state) {
 	return {
+		user: state.user
 		// user: state.user,
 		// page: state.page
 	}

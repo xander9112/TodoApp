@@ -6870,6 +6870,9 @@ To change `display` (e.g. `display: inline-block;`), we suggest using a common C
 input:-webkit-autofill {
   -webkit-box-shadow: inset 0 0 0 50px #fff !important;
 }
+.submit-progress {
+  position: absolute;
+}
 /*========================================================================== */
 /*========================================================================== */
 /*========================================================================== */

@@ -19,8 +19,7 @@ class App extends Component {
 	}
 
 	render () {
-		const { app, user } = this.props;
-		// const { handleLogin, handleLogout } = this.props.userActions;
+		const { app } = this.props; 
 		const style = {
 			'left':   'inherit',
 			'right':  '50px',
@@ -37,7 +36,7 @@ class App extends Component {
 
 		return (
 			<div>
-				<NavBar {...user} />
+				<NavBar />
 				<Grid fluid={true}>
 					<Row>
 						<Col xs={12}>

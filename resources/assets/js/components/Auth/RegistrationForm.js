@@ -1,10 +1,10 @@
 import React, {Component, PropTypes} from 'react';
-import {Paper, TextField, RaisedButton, CircularProgress} from 'material-ui';
+import {TextField, RaisedButton, CircularProgress} from 'material-ui';
 import {reduxForm} from 'redux-form'
 export const fields = [ 'name', 'email', 'password', 'password_confirmation' ];
-import {browserHistory} from 'react-router'
-import {red500, green500} from 'material-ui/styles/colors';
+import {red500} from 'material-ui/styles/colors';
 import _ from 'lodash';
+import $ from 'jquery';
 
 const validate = values => {
 	const errors = {};
@@ -35,7 +35,7 @@ const validate = values => {
 };
 
 const asyncValidate = (values) => {
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve, reject) => { // eslint-disable-line
 		$.ajax({
 			url:     '/auth/registration/validateEmail',
 			method:  'POST',
@@ -63,7 +63,7 @@ class RegistrationForm extends Component {
 	submit (values) {
 		const { submit } = this.props;
 
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve, reject) => {// eslint-disable-line
 			submit(values, resolve, reject);
 		});
 	}

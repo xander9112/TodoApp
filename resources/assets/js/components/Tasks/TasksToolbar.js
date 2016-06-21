@@ -40,11 +40,11 @@ class TasksToolbar extends Component {
 
 	handleOpen () {
 		this.setState({ open: true });
-	};
+	}
 
 	handleClose () {
 		this.setState({ open: false });
-	};
+	}
 
 	handleChange (event, index, value) {
 		this.setState({ value })
@@ -53,7 +53,7 @@ class TasksToolbar extends Component {
 	submit (data) {
 		const { createTask, resetForm } = this.props;
 
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve, reject) => {// eslint-disable-line
 			// console.log(createTask(data, resolve, reject));
 
 			createTask(data, resolve, reject).done(() => {

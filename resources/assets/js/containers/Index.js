@@ -1,5 +1,4 @@
-import React, {Component, PropTypes} from 'react';
-import {bindActionCreators} from 'redux'
+import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {Paper, RaisedButton} from 'material-ui';
 import {Link} from 'react-router';
@@ -61,15 +60,13 @@ class Index extends Component {
 	}
 }
 
-Index.propTypes = {};
-
 function mapStateToProps (state) {
 	return {
 		user: state.user
 	}
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps (/*dispatch*/) {
 	return {}
 }
 

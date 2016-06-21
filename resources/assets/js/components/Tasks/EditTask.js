@@ -24,20 +24,18 @@ class EditTask extends Component {
 	submit () {
 		// const {} = this.props;
 
-		return new Promise((resolve, reject) => {
-			// console.log(createTask(data, resolve, reject));
-
-			/*createTask(data, resolve, reject).done(() => {
-			 resetForm();
-			 this.handleClose();
-			 }).fail(() => {
-			 console.log('fail');
-			 });*/
-		});
+		/*return new Promise((resolve, reject) => {// eslint-disable-line
+		 createTask(data, resolve, reject).done(() => {
+		 resetForm();
+		 this.handleClose();
+		 }).fail(() => {
+		 console.log('fail');
+		 });
+		 });*/
 	}
 
 	render () {
-		const { fields: { name, description }, handleSubmit, valid, task, open, handleClose, } = this.props;
+		const { fields: { name, description }, handleSubmit, valid, open, handleClose } = this.props;
 		return (
 			<Dialog
 				title="Создать задачу"
@@ -91,4 +89,3 @@ export default reduxForm({
 	      fields,
 	      validate
 })(EditTask);
-;

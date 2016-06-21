@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {Paper, TextField, RaisedButton, CircularProgress} from 'material-ui'
+import {Paper} from 'material-ui'
 import RegistrationForm from '../../components/Auth/RegistrationForm'
 import * as userActions from '../../actions/UserActions'
 import {browserHistory} from 'react-router'

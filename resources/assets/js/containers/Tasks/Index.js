@@ -1,8 +1,8 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {List} from 'material-ui/List';
-const { Grid, Row, Col } = require('react-flexbox-grid');
+const { Row, Col } = require('react-flexbox-grid');
 import * as taskActions from '../../actions/TaskActions'
 import TasksToolbar from '../../components/Tasks/TasksToolbar'
 import Task from '../../components/Tasks/Task'
@@ -37,7 +37,7 @@ class TasksIndex extends Component {
 	}
 
 	render () {
-		const { createTask, updateTask, deleteTask } = this.props.taskActions;
+		const { createTask, deleteTask } = this.props.taskActions;
 		const { tasks } = this.props.tasks;
 		const { task, open } = this.state;
 
@@ -82,7 +82,5 @@ function mapDispatchToProps (dispatch) {
 		taskActions: bindActionCreators(taskActions, dispatch)
 	}
 }
-
-TasksIndex.propTypes = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(TasksIndex);

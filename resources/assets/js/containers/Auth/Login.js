@@ -1,9 +1,9 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as userActions from '../../actions/UserActions'
 import LoginForm from '../../components/Auth/LoginForm'
-import {Paper, TextField, RaisedButton} from 'material-ui';
+import {Paper} from 'material-ui';
 import {browserHistory} from 'react-router'
 
 class Login extends Component {

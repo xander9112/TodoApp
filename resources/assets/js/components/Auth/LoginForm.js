@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from 'react';
-import {Paper, TextField, RaisedButton} from 'material-ui';
+import {TextField, RaisedButton} from 'material-ui';
 import {reduxForm} from 'redux-form'
+import CircularProgress from 'material-ui/CircularProgress';
+import {red500} from 'material-ui/styles/colors';
 export const fields = [ 'email', 'password' ];
-import {browserHistory} from 'react-router'
-import {red500, green500} from 'material-ui/styles/colors';
 
 const validate = values => {
 	const errors = {};
@@ -20,6 +20,12 @@ const validate = values => {
 	return errors
 };
 
+const progressLoader = {
+	position: 'absolute',
+	right:    '-50px',
+	top:      '-5px'
+};
+
 class LoginForm extends Component {
 	constructor (props) {
 		super(props);
@@ -28,13 +34,13 @@ class LoginForm extends Component {
 	submit (values) {
 		const { submit } = this.props;
 
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve, reject) => {// eslint-disable-line
 			submit(values, resolve, reject);
 		})
 	}
 
 	render () {
-		const { fields: { email, password }, error, handleSubmit, submitting, valid } = this.props;
+		const { fields: { email, password }, error, handleSubmit, submitting } = this.props;
 
 		return (
 			<form onSubmit={handleSubmit(::this.submit)}>
@@ -60,7 +66,11 @@ class LoginForm extends Component {
 				}
 				<br/>
 				<div>
-					<RaisedButton type="submit" label="Войти" disabled={!valid} primary={true}/>
+					<RaisedButton type="submit" label="Войти" disabled={submitting} primary={true}>
+						{
+							submitting ? <CircularProgress size={0.36} style={progressLoader}/> : ''
+						}
+					</RaisedButton>
 				</div>
 			</form>
 		);

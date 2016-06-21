@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {List, ListItem} from 'material-ui/List';
+import {ListItem} from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 
@@ -44,6 +44,9 @@ class Task extends Component {
 	}
 }
 
-Task.propTypes = {};
+Task.propTypes = {
+	name:        PropTypes.string.isRequired,
+	description: PropTypes.string
+};
 
 export default Task;
