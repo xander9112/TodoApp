@@ -32,7 +32,7 @@ class NavBar extends Component {
 	}
 
 	render () {
-		const { user } = this.props;
+		const { user } = this.props.user;
 
 		const iconElementRight =
 			<IconMenu
