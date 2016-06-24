@@ -50,79 +50,19 @@ class TasksToolbar extends Component {
 		this.setState({ value })
 	}
 
-	submit (data) {
-		const { createTask, resetForm } = this.props;
-
-		return new Promise((resolve, reject) => {// eslint-disable-line
-			// console.log(createTask(data, resolve, reject));
-
-			createTask(data, resolve, reject).done(() => {
-				resetForm();
-				this.handleClose();
-			}).fail(() => {
-				console.log('fail');
-			});
-		});
-	}
-
 	render () {
-		const { fields: { name, description }, handleSubmit, valid } = this.props;
+		const { openDialog } = this.props;
 
 		return (
 			<Row>
-				<FloatingActionButton style={style} onTouchTap={::this.handleOpen}>
+				<FloatingActionButton style={style} onTouchTap={openDialog}>
 					<ContentAdd />
 				</FloatingActionButton>
-				<Dialog
-					title="Создать задачу"
-					modal={false}
-					open={this.state.open}
-					onRequestClose={::this.handleClose}>
-
-					<form onSubmit={handleSubmit(::this.submit)}>
-						<TextField
-							hintText="Новая задача"
-							fullWidth={true}
-							errorText={name.touched && name.error && name.error}
-							{...name}
-						/>
-						<TextField
-							hintText="Описание"
-							fullWidth={true}
-							multiLine={true}
-							errorText={description.touched && description.error && description.error}
-							{...description}
-						/>
-
-						<RaisedButton
-							label="Отмена"
-							primary={true}
-							onTouchTap={::this.handleClose}
-						/>,
-						<RaisedButton
-							label="Создать"
-							primary={true}
-							disabled={!valid}
-							type="submit"
-							keyboardFocused={true}
-						/>
-					</form>
-				</Dialog>
 			</Row>
 		);
 	}
 }
 
-TasksToolbar.propTypes = {
-	fields:       PropTypes.object.isRequired,
-	handleSubmit: PropTypes.func.isRequired,
-	error:        PropTypes.string,
-	resetForm:    PropTypes.func.isRequired,
-	submitting:   PropTypes.bool.isRequired
-};
+TasksToolbar.propTypes = {};
 
-export default reduxForm({
-	form: 'NewTaskForm',
-	      fields,
-	      validate
-})(TasksToolbar);
+export default TasksToolbar;

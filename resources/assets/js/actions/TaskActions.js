@@ -2,7 +2,8 @@ import {
 	ADD_TASK_SUCCESS,
 	UPDATE_TASK_SUCCESS,
 	DELETE_TASK_SUCCESS,
-	GET_TASKS_SUCCESS
+	GET_TASKS_SUCCESS,
+	LOAD
 } from '../constants/Task'
 import {TaskModel} from '../models/TaskModel';
 import {showMessage} from './AppActions';
@@ -12,6 +13,7 @@ export const addTask = createAction(ADD_TASK_SUCCESS);
 export const getTask = createAction(GET_TASKS_SUCCESS);
 export const updateTaskAction = createAction(UPDATE_TASK_SUCCESS);
 export const deleteTaskAction = createAction(DELETE_TASK_SUCCESS);
+export const loadTask = createAction(LOAD);
 
 export function getTasks () {
 	return function (dispatch) {
@@ -95,5 +97,14 @@ export function deleteTask (id) {
 				}
 			}
 		});
+	}
+}
+
+
+// export const load = data => ({ type: LOAD, data });
+
+export function load (data) {
+	return function (dispatch) {
+		dispatch(loadTask(data))
 	}
 }

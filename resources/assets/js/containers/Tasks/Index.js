@@ -6,14 +6,15 @@ const { Row, Col } = require('react-flexbox-grid');
 import * as taskActions from '../../actions/TaskActions'
 import TasksToolbar from '../../components/Tasks/TasksToolbar'
 import Task from '../../components/Tasks/Task'
-import EditTask from '../../components/Tasks/EditTask'
+import DialogForm from '../../components/Tasks/DialogForm'
 
 class TasksIndex extends Component {
 	constructor (props) {
 		super(props);
 
 		this.state = {
-			open: false
+			open: false,
+			task: {}
 		};
 	}
 
@@ -24,15 +25,24 @@ class TasksIndex extends Component {
 	}
 
 	editTask (data) {
+		const { load } = this.props.taskActions;
+		load(data);
+
 		this.setState({
-			open: true,
-			tasK: data
+			open: true
 		});
 	}
 
 	handleClose () {
 		this.setState({
-			open: false
+			open: false,
+			task: {}
+		});
+	}
+
+	handleOpen () {
+		this.setState({
+			open: true
 		});
 	}
 
@@ -48,7 +58,9 @@ class TasksIndex extends Component {
 		return (
 			<Row>
 				<Col xs={12}>
-					<TasksToolbar createTask={createTask}/>
+					<TasksToolbar
+						createTask={createTask}
+						openDialog={::this.handleOpen}/>
 				</Col>
 				<Col xs={12}>
 					{tasks.length ?
@@ -63,7 +75,7 @@ class TasksIndex extends Component {
 						</Row>
 					}
 				</Col>
-				<EditTask task={task} open={open} handleClose={::this.handleClose}/>
+				<DialogForm open={open} data={task} handleClose={::this.handleClose}/>
 			</Row>
 		);
 	}

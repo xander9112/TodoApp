@@ -3,8 +3,9 @@ import {reduxForm} from 'redux-form'
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-export const fields = [ 'name', 'description' ];
+const { Row, Col } = require('react-flexbox-grid');
 
+export const fields = [ 'name', 'description' ];
 const validate = values => {
 	const errors = {};
 
@@ -16,7 +17,8 @@ const validate = values => {
 	return errors
 };
 
-class EditTask extends Component {
+
+class DialogForm extends Component {
 	constructor (props) {
 		super(props);
 	}
@@ -36,6 +38,7 @@ class EditTask extends Component {
 
 	render () {
 		const { fields: { name, description }, handleSubmit, valid, open, handleClose } = this.props;
+
 		return (
 			<Dialog
 				title="Создать задачу"
@@ -44,39 +47,52 @@ class EditTask extends Component {
 				onRequestClose={handleClose}>
 
 				<form onSubmit={handleSubmit(::this.submit)}>
-					<TextField
-						hintText="Новая задача"
-						fullWidth={true}
-						errorText={name.touched && name.error && name.error}
-						{...name}
-					/>
-					<TextField
-						hintText="Описание"
-						fullWidth={true}
-						multiLine={true}
-						errorText={description.touched && description.error && description.error}
-						{...description}
-					/>
-
-					<RaisedButton
-						label="Отмена"
-						primary={true}
-						onTouchTap={handleClose}
-					/>,
-					<RaisedButton
-						label="Создать"
-						primary={true}
-						disabled={!valid}
-						type="submit"
-						keyboardFocused={true}
-					/>
+					<Row>
+						<Col xs={12}>
+							<TextField
+								hintText="Новая задача"
+								fullWidth={true}
+								errorText={name.touched && name.error && name.error}
+								{...name}
+							/>
+						</Col>
+					</Row>
+					<Row>
+						<Col xs={12}>
+							<TextField
+								hintText="Описание"
+								fullWidth={true}
+								multiLine={true}
+								errorText={description.touched && description.error && description.error}
+								{...description}
+							/>
+						</Col>
+					</Row>
+					<Row end="xs">
+						<Col xs={3}>
+							<RaisedButton
+								label="Отмена"
+								primary={true}
+								onTouchTap={handleClose}
+							/>
+						</Col>
+						<Col xs={3}>
+							<RaisedButton
+								label="Создать"
+								primary={true}
+								disabled={!valid}
+								type="submit"
+								keyboardFocused={true}
+							/>
+						</Col>
+					</Row>
 				</form>
 			</Dialog>
 		);
 	}
 }
 
-EditTask.propTypes = {
+DialogForm.propTypes = {
 	fields:       PropTypes.object.isRequired,
 	handleSubmit: PropTypes.func.isRequired,
 	error:        PropTypes.string,
@@ -85,11 +101,10 @@ EditTask.propTypes = {
 };
 
 export default reduxForm({
-		form: 'NewTaskForm',
+		form: 'DialogForm',
 		      fields,
 		      validate
 	}, state => ({ // mapStateToProps
-		initialValues: state.account.data // will pull state into form's initialValues
-	}),
-	{ load: loadAccount }      // mapDispatchToProps (will bind action creator to dispatch)
-)(EditTask);
+		initialValues: state.currentTask.currentTask // will pull state into form's initialValues
+	})
+)(DialogForm);
