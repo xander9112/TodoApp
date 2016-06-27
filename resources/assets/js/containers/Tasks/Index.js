@@ -14,6 +14,7 @@ class TasksIndex extends Component {
 
 		this.state = {
 			open: false,
+			edit: false,
 			task: {}
 		};
 	}
@@ -29,27 +30,33 @@ class TasksIndex extends Component {
 		load(data);
 
 		this.setState({
-			open: true
+			open: true,
+			edit: true,
+			task: data
 		});
 	}
 
 	handleClose () {
 		this.setState({
 			open: false,
+			edit: false,
 			task: {}
 		});
 	}
 
 	handleOpen () {
+		const { load } = this.props.taskActions;
+		load({});
 		this.setState({
 			open: true
 		});
 	}
 
 	render () {
-		const { createTask, deleteTask } = this.props.taskActions;
+		const { taskActions } = this.props;
+		const { createTask, deleteTask } = taskActions;
 		const { tasks } = this.props.tasks;
-		const { task, open } = this.state;
+		const { task, open, edit } = this.state;
 
 		const Tasks = tasks.map((task) => {
 			return <Task task={task} key={task.id} deleteTask={deleteTask} editTask={::this.editTask}/>
@@ -70,12 +77,15 @@ class TasksIndex extends Component {
 						:
 						<Row center="xs">
 							<Col xs={6}>
-								Список задач пуст
+								<h1>
+									Список задач пуст
+								</h1>
 							</Col>
 						</Row>
 					}
 				</Col>
-				<DialogForm open={open} data={task} handleClose={::this.handleClose}/>
+				<DialogForm open={open} isEdit={edit} data={task} actions={taskActions}
+				            handleClose={::this.handleClose}/>
 			</Row>
 		);
 	}

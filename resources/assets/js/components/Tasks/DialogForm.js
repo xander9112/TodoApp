@@ -23,29 +23,42 @@ class DialogForm extends Component {
 		super(props);
 	}
 
-	submit () {
-		// const {} = this.props;
+	submit (formData) {
+		const { createTask, updateTask } = this.props.actions;
+		const { isEdit, data, handleClose, resetForm } = this.props;
 
-		/*return new Promise((resolve, reject) => {// eslint-disable-line
-		 createTask(data, resolve, reject).done(() => {
-		 resetForm();
-		 this.handleClose();
-		 }).fail(() => {
-		 console.log('fail');
-		 });
-		 });*/
+		return new Promise((resolve, reject) => {// eslint-disable-line
+			if (isEdit) {
+				const newData = { ...data, name: formData.name, description: formData.description };
+
+				updateTask(newData, resolve, reject).done(() => {
+					handleClose();
+				}).fail(() => {
+					console.log('fail');
+				});
+			} else {
+				createTask(formData, resolve, reject).done(() => {
+					resetForm();
+					handleClose();
+				}).fail(() => {
+					console.log('fail');
+				});
+			}
+		});
 	}
 
 	render () {
-		const { fields: { name, description }, handleSubmit, valid, open, handleClose } = this.props;
+		const { fields: { name, description }, handleSubmit, valid, open, handleClose, isEdit } = this.props;
+
+		const DialogTitle = isEdit ? 'Обновить задачу' : 'Создать задачу';
+		const RaisedButtonLabel = isEdit ? 'Обновить' : 'Создать';
 
 		return (
 			<Dialog
-				title="Создать задачу"
+				title={DialogTitle}
 				modal={false}
 				open={open}
 				onRequestClose={handleClose}>
-
 				<form onSubmit={handleSubmit(::this.submit)}>
 					<Row>
 						<Col xs={12}>
@@ -69,16 +82,9 @@ class DialogForm extends Component {
 						</Col>
 					</Row>
 					<Row end="xs">
-						<Col xs={3}>
+						<Col xs={12}>
 							<RaisedButton
-								label="Отмена"
-								primary={true}
-								onTouchTap={handleClose}
-							/>
-						</Col>
-						<Col xs={3}>
-							<RaisedButton
-								label="Создать"
+								label={RaisedButtonLabel}
 								primary={true}
 								disabled={!valid}
 								type="submit"

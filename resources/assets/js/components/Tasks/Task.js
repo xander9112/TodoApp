@@ -18,7 +18,7 @@ class Task extends Component {
 
 	editTask () {
 		const { task, editTask } = this.props;
-
+		
 		editTask(task);
 	}
 
