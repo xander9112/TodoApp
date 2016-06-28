@@ -20,7 +20,7 @@ class TasksIndex extends Component {
 			open:   false,
 			edit:   false,
 			task:   {},
-			filter: 'withDescription',
+			filter: 'all',
 			sort:   'name'
 		};
 	}

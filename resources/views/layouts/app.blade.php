@@ -14,7 +14,7 @@
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}">
+    <link rel="stylesheet" href="/public/assets/css/style.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,8 +33,8 @@
 </div>
 
 <!-- JavaScripts -->
-<script src="{{ asset('/assets/vendor/vendor.js') }}" charset="utf-8"></script>
-<script src="{{ asset('/assets/js/bundle.js') }}"></script>
+<script src="/public/assets/vendor/vendor.js" charset="utf-8"></script>
+<script src="/public/assets/js/bundle.js"></script>
 
 </body>
 </html>

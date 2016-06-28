@@ -19,13 +19,13 @@ module.exports = {
 		fonts:        './resources/assets/fonts/**/*'
 	},
 	build:      {
-		js:           './assets/js',
-		vendor:       './assets/vendor',
-		styles:       './assets/css',
-		stylesBlocks: './resources/assets/styles',
-		images:       './assets/images',
-		sprite:       './assets/images/sprite',
-		fonts:        './assets/fonts'
+		js:           './public/assets/js',
+		vendor:       './public/assets/vendor',
+		styles:       './public/assets/css',
+		stylesBlocks: './public/resources/assets/styles',
+		images:       './public/assets/images',
+		sprite:       './public/assets/images/sprite',
+		fonts:        './public/assets/fonts'
 	},
 	clean:      './assets/',
 	production: false
