@@ -18,7 +18,7 @@ class Task extends Component {
 
 	editTask () {
 		const { task, editTask } = this.props;
-		
+
 		editTask(task);
 	}
 
@@ -33,12 +33,17 @@ class Task extends Component {
 		const button = <IconButton onTouchTap={::this.deleteTask}>
 			<FontIcon className="material-icons">delete</FontIcon>
 		</IconButton>;
+
+		const completed = task.completed ? <FontIcon className="material-icons">done</FontIcon> : <FontIcon />;
+
 		return (
 			<ListItem
 				primaryText={task.name}
 				secondaryText={task.description}
+				secondaryTextLines={2}
 				onTouchTap={::this.editTask}
 				rightIconButton={button}
+				leftIcon={completed}
 			/>
 		);
 	}

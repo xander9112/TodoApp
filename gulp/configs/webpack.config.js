@@ -47,6 +47,6 @@ module.exports = {
 	},
 
 	resolve: {
-		modulesDirectories: [ 'src/assets/js', 'node_modules' ],
+		modulesDirectories: [ 'resources/assets/js', 'node_modules' ]
 	}
 };

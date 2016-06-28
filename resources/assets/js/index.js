@@ -28,6 +28,8 @@ $.ajaxSetup({
 
 const RootElement = document.getElementById('root');
 
+// console.log('JS точто новый');
+
 if (!!RootElement) {
 	render(
 		<Provider store={store}>
@@ -35,7 +37,7 @@ if (!!RootElement) {
 				<Router history={browserHistory}>
 					<Route path="/" component={App}>
 						<IndexRoute component={Index}/>
-						
+
 						<Route path="auth">
 							<Route path="login" component={Login}/>
 							<Route path="registration" component={Registration}/>
@@ -51,7 +53,3 @@ if (!!RootElement) {
 		RootElement
 	);
 }
-
-/*
-
- */

@@ -1,26 +1,10 @@
 import React, {Component, PropTypes} from 'react';
-import {reduxForm} from 'redux-form'
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import Dialog from 'material-ui/Dialog';
 const { Row } = require('react-flexbox-grid');
 
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-
 export const fields = [ 'name', 'description' ];
-
-const validate = values => {
-	const errors = {};
-
-	if (!values.name) {
-		errors.name = 'Поле обязательно для заполнения';
-	}
-
-
-	return errors
-};
 
 const style = {
 	position: 'fixed',
@@ -63,6 +47,8 @@ class TasksToolbar extends Component {
 	}
 }
 
-TasksToolbar.propTypes = {};
+TasksToolbar.propTypes = {
+	openDialog: PropTypes.func
+};
 
 export default TasksToolbar;

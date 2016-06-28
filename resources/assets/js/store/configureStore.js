@@ -3,7 +3,7 @@ import rootReducer from '../reducers/index'
 
 import createLogger from 'redux-logger'
 import thunk from 'redux-thunk'
-import {storeAutentication} from '../containers/storeAutentication';
+import {updateTask} from '../containers/updateTask';
 
 export default function configureStore (initialState) {
 	const logger = createLogger({
@@ -15,7 +15,7 @@ export default function configureStore (initialState) {
 	const store = createStore(
 		rootReducer,
 		initialState,
-		applyMiddleware(thunk, storeAutentication, logger));
+		applyMiddleware(thunk, updateTask, logger));
 
 	if (module.hot) {
 		module.hot.accept('../reducers', () => {
